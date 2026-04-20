@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Quantum-Resistant 5G Handover – Interactive Infographic</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #020617;
+      color: #f9fafb;
+      line-height: 1.6;
+    }
+    a { color: #38bdf8; text-decoration: none; }
+    .page {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 20px 14px 80px;
+    }
+    header.hero {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(18px);
+      background: linear-gradient(to bottom, rgba(15,23,42,0.96), rgba(15,23,42,0.88));
+      border-bottom: 1px solid rgba(51,65,85,0.9);
+      padding: 12px 0 10px;
+      margin-bottom: 18px;
+    }
+    .hero-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 4px 8px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+    .hero-title {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .hero-title h1 {
+      font-size: clamp(1.55rem, 3vw, 1.9rem);
+      font-weight: 700;
+    }
+    .hero-title span {
+      font-size: 0.78rem;
+      color: #9ca3af;
+    }
+    .hero-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.78rem;
+      color: #cbd5f5;
+    }
+    .logo-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 700;
+      background: radial-gradient(circle at 30% 0, #38bdf8, #020617 70%);
+    }
+
+    .nav-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .nav-tab {
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.6);
+      font-size: 0.78rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      background: rgba(15,23,42,0.9);
+      color: #e5e7eb;
+      transition: background .15s ease, color .15s ease, border-color .15s ease;
+    }
+    .nav-tab.active {
+      background: #22c55e;
+      color: #022c22;
+      border-color: #4ade80;
+    }
+
+    .intro {
+      margin: 14px 0 20px;
+      padding: 16px 14px;
+      border-radius: 16px;
+      background: radial-gradient(circle at top left, #0f172a, #020617 60%);
+      border: 1px solid rgba(30,64,175,0.8);
+      box-shadow: 0 18px 40px rgba(15,23,42,0.9);
+      font-size: 0.92rem;
+      color: #e5e7eb;
+    }
+
+    .section {
+      margin-top: 26px;
+      scroll-margin-top: 86px;
+    }
+    .section-label {
+      font-size: 0.83rem;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: #9ca3af;
+      margin-bottom: 8px;
+    }
+    .section-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+    .card {
+      border-radius: 16px;
+      padding: 16px 15px 18px;
+      background: linear-gradient(145deg, #020617, #020617 45%, #020617 70%, #020617 100%);
+      border: 1px solid rgba(30,64,175,0.7);
+      box-shadow: 0 14px 32px rgba(15,23,42,0.9);
+      position: relative;
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease, background .18s ease;
+    }
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 20px 45px rgba(15,23,42,0.95);
+      border-color: #38bdf8;
+      background: radial-gradient(circle at top left, #020617, #020617 55%, #020617 100%);
+    }
+    .card h2 {
+      font-size: 1rem;
+      margin-bottom: 8px;
+    }
+    .card p, .card li {
+      font-size: 0.9rem;
+      color: #cbd5f5;
+    }
+    .card-toggle {
+      position: absolute;
+      top: 10px;
+      right: 14px;
+      font-size: 0.7rem;
+      color: #9ca3af;
+    }
+    .card[data-collapsed="true"] .card-body {
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0.0;
+    }
+    .card[data-collapsed="false"] .card-body {
+      max-height: 260px;
+      opacity: 1;
+    }
+    .card-body {
+      transition: max-height .22s ease, opacity .22s ease;
+    }
+
+    ul { padding-left: 18px; margin-top: 4px; }
+    li { margin-bottom: 4px; }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+    .pill {
+      padding: 5px 9px;
+      border-radius: 999px;
+      background: #020617;
+      border: 1px solid rgba(148,163,184,0.7);
+      font-size: 0.78rem;
+      color: #e5e7eb;
+    }
+
+    .flow-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.5fr) minmax(0, 1.2fr);
+      gap: 16px;
+      margin-top: 10px;
+    }
+    .flow-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 12px;
+    }
+    .flow-step {
+      padding: 10px 11px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(148,163,184,0.7);
+      background: radial-gradient(circle at top left, #020617, #020617 65%);
+      cursor: pointer;
+      transition: border-color .16s ease, box-shadow .16s ease, background .18s ease, transform .14s ease;
+    }
+    .flow-step span.idx {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      margin-bottom: 4px;
+      background: #22c55e;
+      color: #022c22;
+      font-weight: 700;
+    }
+    .flow-step h3 {
+      font-size: 0.9rem;
+      margin-bottom: 2px;
+    }
+    .flow-step p {
+      font-size: 0.82rem;
+      color: #cbd5f5;
+    }
+    .flow-step.active {
+      border-color: #38bdf8;
+      box-shadow: 0 16px 36px rgba(15,23,42,0.95);
+      transform: translateY(-2px);
+      background: radial-gradient(circle at top left, #0f172a, #020617 65%);
+    }
+
+    .flow-detail {
+      border-radius: 14px;
+      border: 1px solid rgba(55,65,81,0.9);
+      padding: 12px 13px 15px;
+      background: #020617;
+      font-size: 0.86rem;
+      color: #e5e7eb;
+    }
+    .flow-detail h3 { font-size: 0.9rem; margin-bottom: 6px; }
+    .flow-detail p { color: #cbd5f5; }
+
+    .metric-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .metric-filter {
+      padding: 4px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.7);
+      font-size: 0.78rem;
+      cursor: pointer;
+      background: #020617;
+      color: #e5e7eb;
+      transition: background .15s ease, border-color .15s ease, color .15s ease;
+    }
+    .metric-filter.active {
+      background: #38bdf8;
+      border-color: #7dd3fc;
+      color: #0f172a;
+    }
+    .metric-list li[data-group] {
+      opacity: 0.35;
+      transition: opacity .18s ease;
+    }
+    .metric-list li[data-group].highlighted {
+      opacity: 1;
+    }
+
+    footer {
+      margin-top: 36px;
+      font-size: 0.78rem;
+      color: #9ca3af;
+      text-align: center;
+      border-top: 1px solid rgba(55,65,81,0.9);
+      padding-top: 12px;
+    }
+
+    @media (max-width: 760px) {
+      .flow-layout {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="hero-title">
+        <h1>Quantum-Resistant Encryption for 5G Handover</h1>
+        <span>HTI · Communications and Electronic Engineering · Graduation Project 2026</span>
+        <div class="nav-tabs" id="navTabs">
+          <button class="nav-tab active" data-target="snapshot">Snapshot</button>
+          <button class="nav-tab" data-target="architecture">Architecture</button>
+          <button class="nav-tab" data-target="evaluation">Evaluation</button>
+          <button class="nav-tab" data-target="prototype">Prototype</button>
+        </div>
+      </div>
+      <div class="hero-logo">
+        <div class="logo-mark">HTI</div>
+        <div>
+          <div>Prepared by: Ammar, Omar, Ali, Amr</div>
+          <div>Supervised by: Dr. Karim Badr</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="page">
+    <section class="intro">
+      This interactive infographic summarizes an AI‑assisted, post‑quantum secure
+      handover design for 5G networks. Use the tabs to jump between sections,
+      click cards to expand details, and select metrics to highlight what matters
+      for your deployment.
+    </section>
+
+    <section class="section" id="section-snapshot">
+      <div class="section-label">Section 1</div>
+      <div class="section-title">Project snapshot</div>
+      <div class="grid">
+        <article class="card" data-collapsed="false">
+          <div class="card-toggle">click to collapse</div>
+          <h2>Problem</h2>
+          <div class="card-body">
+            <p>
+              Todays 5G handover security is based on public‑key algorithms
+              that large quantum computers could break. An attacker who records
+              encrypted traffic now could decrypt it years later once such
+              machines exist.
+            </p>
+          </div>
+        </article>
+        <article class="card" data-collapsed="true">
+          <div class="card-toggle">click to expand</div>
+          <h2>Goal</h2>
+          <div class="card-body">
+            <p>
+              Build a handover procedure that keeps latency and signaling
+              overhead inside 5G limits while providing strong protection against
+              both classical and quantum attacks.
+            </p>
+          </div>
+        </article>
+        <article class="card" data-collapsed="true">
+          <div class="card-toggle">click to expand</div>
+          <h2>Scope</h2>
+          <div class="card-body">
+            <ul>
+              <li>RAN and 5G core handover signaling only.</li>
+              <li>Post‑quantum ML‑KEM for key establishment, ML‑DSA for signing.</li>
+              <li>Compare against baseline 5G handover in latency and message size.</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="section-architecture">
+      <div class="section-label">Section 2</div>
+      <div class="section-title">Proposed architecture</div>
+      <div class="pill-row">
+        <span class="pill">Source gNB</span>
+        <span class="pill">Target gNB</span>
+        <span class="pill">AMF / SEAF</span>
+        <span class="pill">UE</span>
+      </div>
+      <div class="flow-layout">
+        <div class="flow-steps" id="flowSteps">
+          <div class="flow-step active" data-step="1" data-detail="The network advertises that it supports post‑quantum safe handover. Policy decides when to enable it (e.g., high‑value users, enterprise slices, or roaming scenarios).">
+            <span class="idx">1</span>
+            <h3>Capability &amp; policy</h3>
+            <p>Network signals PQ support and chooses ML‑KEM / ML‑DSA parameters.</p>
+          </div>
+          <div class="flow-step" data-step="2" data-detail="The UE and core exchange ML‑KEM messages to derive fresh keys for the upcoming handover. These keys are independent from long‑term credentials, reducing compromise impact.">
+            <span class="idx">2</span>
+            <h3>PQ key setup</h3>
+            <p>UE and core run ML‑KEM to agree on new traffic protection keys.</p>
+          </div>
+          <div class="flow-step" data-step="3" data-detail="Handover commands are signed with ML‑DSA so that rogue gNBs or man‑in‑the‑middle devices cannot inject fake control messages.">
+            <span class="idx">3</span>
+            <h3>Signed commands</h3>
+            <p>Control messages between gNBs and core are signed with ML‑DSA.</p>
+          </div>
+          <div class="flow-step" data-step="4" data-detail="Once handover completes, the new keys secure user‑plane traffic on the target gNB, protecting long‑term confidentiality even against record‑now‑decrypt‑later attacks.">
+            <span class="idx">4</span>
+            <h3>Secure data path</h3>
+            <p>New keys protect user traffic after the handover is finalized.</p>
+          </div>
+        </div>
+        <aside class="flow-detail" id="flowDetail">
+          <h3>Step 1 · Capability &amp; policy</h3>
+          <p>
+            The network advertises that it supports post‑quantum safe handover.
+            Policy decides when to enable it (for example for enterprise slices or
+            high‑value subscribers).
+          </p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="section-evaluation">
+      <div class="section-label">Section 3</div>
+      <div class="section-title">Evaluation dashboard</div>
+      <div class="metric-filters" id="metricFilters">
+        <button class="metric-filter active" data-group="latency">Latency</button>
+        <button class="metric-filter" data-group="size">Message size</button>
+        <button class="metric-filter" data-group="cpu">CPU cost</button>
+        <button class="metric-filter" data-group="security">Security</button>
+      </div>
+      <div class="grid">
+        <article class="card" data-collapsed="false">
+          <div class="card-toggle">click to collapse</div>
+          <h2>Metrics</h2>
+          <div class="card-body">
+            <ul class="metric-list">
+              <li data-group="latency">Handover latency (ms) vs. baseline.</li>
+              <li data-group="size">Growth in signaling message size.</li>
+              <li data-group="cpu">CPU cost on gNB / UE for ML‑KEM and ML‑DSA.</li>
+              <li data-group="security">Resistance to quantum and classical attacks.</li>
+            </ul>
+          </div>
+        </article>
+        <article class="card" data-collapsed="true">
+          <div class="card-toggle">click to expand</div>
+          <h2>Experiments</h2>
+          <div class="card-body">
+            <ul>
+              <li>Simulated urban, highway, and indoor mobility traces.</li>
+              <li>Control‑plane stress with many parallel handovers.</li>
+              <li>Comparison of PQ vs. non‑PQ handover variants.</li>
+            </ul>
+          </div>
+        </article>
+        <article class="card" data-collapsed="true">
+          <div class="card-toggle">click to expand</div>
+          <h2>Expected outcome</h2>
+          <div class="card-body">
+            <p>
+              A handover design that adds only modest overhead but removes
+              long‑term decryption risk from record‑now‑decrypt‑later attackers.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="section-prototype">
+      <div class="section-label">Section 4</div>
+      <div class="section-title">Prototype requirements</div>
+      <div class="card" data-collapsed="false">
+        <div class="card-toggle">click to collapse</div>
+        <div class="card-body">
+          <ul>
+            <li>5G handover signaling or a simplified simulation platform.</li>
+            <li>ML‑KEM and ML‑DSA libraries aligned with NIST recommendations.</li>
+            <li>Baseline model for source / target gNB and AMF interactions.</li>
+            <li>Tools to measure latency and message‑size impact.</li>
+            <li>Optional virtualization or emulation for network‑level tests.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      Interactive infographic for the graduation project at Higher Technological Institute,
+      10th of Ramadan City – Communications and Electronic Engineering.
+    </footer>
+  </main>
+
+  <script>
+    // Smooth scroll tabs
+    const tabs = document.querySelectorAll('.nav-tab');
+    const sections = {
+      snapshot: document.getElementById('section-snapshot'),
+      architecture: document.getElementById('section-architecture'),
+      evaluation: document.getElementById('section-evaluation'),
+      prototype: document.getElementById('section-prototype')
+    };
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        const target = sections[tab.dataset.target];
+        if (target) {
+          window.scrollTo({
+            top: target.offsetTop - 80,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+
+    // Collapsible cards
+    document.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('click', (e) => {
+        if (e.target.closest('a')) return;
+        const collapsed = card.getAttribute('data-collapsed');
+        if (collapsed === 'true') {
+          card.setAttribute('data-collapsed', 'false');
+          const label = card.querySelector('.card-toggle');
+          if (label) label.textContent = 'click to collapse';
+        } else if (collapsed === 'false') {
+          card.setAttribute('data-collapsed', 'true');
+          const label = card.querySelector('.card-toggle');
+          if (label) label.textContent = 'click to expand';
+        }
+      });
+    });
+
+    // Flow detail interaction
+    const flowSteps = document.querySelectorAll('.flow-step');
+    const flowDetail = document.getElementById('flowDetail');
+    flowSteps.forEach(step => {
+      step.addEventListener('click', () => {
+        flowSteps.forEach(s => s.classList.remove('active'));
+        step.classList.add('active');
+        const idx = step.dataset.step;
+        const text = step.dataset.detail;
+        if (flowDetail) {
+          const h3 = flowDetail.querySelector('h3');
+          const p = flowDetail.querySelector('p');
+          if (h3) h3.textContent = `Step ${idx} · ${step.querySelector('h3').textContent}`;
+          if (p) p.textContent = text;
+        }
+      });
+    });
+
+    // Metric filters
+    const metricFilters = document.querySelectorAll('.metric-filter');
+    const metricItems = document.querySelectorAll('.metric-list li[data-group]');
+    function applyMetricFilter(group) {
+      metricItems.forEach(li => {
+        if (!group || li.dataset.group === group) {
+          li.classList.add('highlighted');
+        } else {
+          li.classList.remove('highlighted');
+        }
+      });
+    }
+    applyMetricFilter('latency');
+
+    metricFilters.forEach(btn => {
+      btn.addEventListener('click', () => {
+        metricFilters.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        applyMetricFilter(btn.dataset.group);
+      });
+    });
+  </script>
+</body>
+</html>
