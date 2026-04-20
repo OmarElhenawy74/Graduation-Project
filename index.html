@@ -10,7 +10,7 @@
             --cyber-green: #00ff9d;
             --cyber-blue: #00d4ff;
             --cyber-red: #ff3b3b;
-            --glass-bg: rgba(10, 20, 30, 0.7);
+            --glass-bg: rgba(10, 20, 30, 0.95);
             --neon-shadow: 0 0 15px rgba(0, 255, 157, 0.3);
         }
 
@@ -60,8 +60,8 @@
 
         .hero-title span { font-size: 0.8rem; color: var(--cyber-blue); }
 
+        /* Navigation & Button Styling */
         .nav-tabs { display: flex; gap: 10px; margin-top: 15px; }
-
         .nav-tab {
             padding: 8px 15px;
             background: transparent;
@@ -71,12 +71,79 @@
             font-size: 0.75rem;
             font-weight: bold;
             transition: 0.3s;
+            cursor: pointer;
         }
-
         .nav-tab.active, .nav-tab:hover {
             background: var(--cyber-blue);
             color: var(--bg-deep);
             box-shadow: 0 0 15px var(--cyber-blue);
+        }
+
+        .btn-team {
+            background: transparent;
+            border: 2px solid var(--cyber-green);
+            color: var(--cyber-green);
+            padding: 10px 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: 0.4s;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 255, 157, 0.2);
+        }
+        .btn-team:hover {
+            background: var(--cyber-green);
+            color: var(--bg-deep);
+            box-shadow: 0 0 25px var(--cyber-green);
+        }
+
+        /* Modal / Team List Styling */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            backdrop-filter: blur(10px);
+        }
+        .modal-content {
+            background: var(--bg-deep);
+            border: 2px solid var(--cyber-green);
+            margin: 10% auto;
+            padding: 40px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 0 50px rgba(0, 255, 157, 0.2);
+            position: relative;
+            text-align: center;
+        }
+        .modal-content h2 {
+            color: var(--cyber-green);
+            margin-bottom: 25px;
+            border-bottom: 1px solid var(--cyber-green);
+            padding-bottom: 10px;
+            letter-spacing: 2px;
+        }
+        .team-list { list-style: none; padding: 0; }
+        .team-list li {
+            padding: 12px;
+            color: var(--cyber-blue);
+            font-size: 1.1rem;
+            border-bottom: 1px solid rgba(0, 212, 255, 0.1);
+            transition: 0.3s;
+        }
+        .team-list li:hover {
+            color: var(--cyber-green);
+            background: rgba(0, 255, 157, 0.05);
+        }
+        .close-btn {
+            position: absolute;
+            top: 15px; right: 20px;
+            color: var(--cyber-red);
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
         }
 
         .intro {
@@ -85,18 +152,6 @@
             padding: 25px;
             border-radius: 5px;
             margin: 30px 0;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .intro::before {
-            content: "SECURE_BOOT_INIT";
-            position: absolute;
-            top: 5px;
-            right: 10px;
-            font-size: 0.6rem;
-            color: var(--cyber-green);
-            opacity: 0.5;
         }
 
         .section { margin-top: 50px; scroll-margin-top: 100px; }
@@ -110,71 +165,36 @@
         }
 
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-
         .card {
             background: rgba(10, 25, 40, 0.6);
             border: 1px solid rgba(0, 255, 157, 0.3);
             padding: 25px;
             transition: 0.4s;
-            position: relative;
         }
-
-        .card:hover {
-            border-color: var(--cyber-green);
-            background: rgba(0, 255, 157, 0.05);
-            box-shadow: 0 0 30px rgba(0, 255, 157, 0.1);
-            transform: scale(1.02);
-        }
-
-        .card h2 { color: var(--cyber-blue); margin-bottom: 15px; font-size: 1.2rem; }
+        .card:hover { border-color: var(--cyber-green); background: rgba(0, 255, 157, 0.05); }
+        .card h2 { color: var(--cyber-blue); margin-bottom: 15px; }
 
         .flow-layout { display: grid; grid-template-columns: 1fr 300px; gap: 20px; }
         .flow-step {
             border: 1px solid rgba(0, 212, 255, 0.3);
             padding: 15px;
             margin-bottom: 10px;
-            transition: 0.3s;
+            cursor: pointer;
         }
-        .flow-step.active {
-            border-color: var(--cyber-green);
-            background: rgba(0, 255, 157, 0.1);
-        }
-
-        .idx { color: var(--cyber-green); font-weight: bold; margin-right: 10px; }
-
-        .flow-detail {
-            background: rgba(5, 15, 25, 0.8);
-            border: 1px solid var(--cyber-green);
-            padding: 20px;
-            height: fit-content;
-        }
+        .flow-step.active { border-color: var(--cyber-green); background: rgba(0, 255, 157, 0.1); }
+        .flow-detail { border: 1px solid var(--cyber-green); padding: 20px; background: rgba(5,15,25,0.8); }
 
         footer {
-            margin-top: 100px;
-            padding: 40px;
-            text-align: center;
+            margin-top: 100px; padding: 40px; text-align: center;
             border-top: 1px solid var(--cyber-green);
-            font-size: 0.8rem;
-            color: var(--cyber-blue);
+            color: var(--cyber-blue); font-size: 0.8rem;
         }
 
-        /* Animations */
-        @keyframes scan {
-            0% { transform: translateY(-100%); }
-            100% { transform: translateY(100%); }
-        }
-
+        @keyframes scan { 0% { transform: translateY(-100%); } 100% { transform: translateY(100%); } }
         .page::after {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: rgba(0, 255, 157, 0.2);
-            animation: scan 4s linear infinite;
-            pointer-events: none;
-            z-index: 1000;
+            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 5px;
+            background: rgba(0, 255, 157, 0.2); animation: scan 4s linear infinite;
+            pointer-events: none; z-index: 1000;
         }
     </style>
 </head>
@@ -191,12 +211,27 @@
                     <button class="nav-tab" data-target="prototype">PROTOTYPE</button>
                 </div>
             </div>
-            <div class="hero-logo" style="text-align:right">
-                <div style="font-weight:bold; color:var(--cyber-green)">[ SECURE_ACCESS ]</div>
-                <div style="font-size:0.7rem">TEAM: AMMAR_OMAR_ALI_AMR</div>
+            <div class="hero-logo">
+                <button class="btn-team" id="showTeam">VIEW_PROJECT_TEAM</button>
             </div>
         </div>
     </header>
+
+    <div id="teamModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeModal">&times;</span>
+            <h2>[ PROJECT_MEMBERS ]</h2>
+            <ul class="team-list">
+                <li>AMMAR YASSER AHMED</li>
+                <li>OMAR FATHY ELHENAWY</li>
+                <li>ALI IBRAHIM MOHAMED</li>
+                <li>AMR MOHAMED ELSAYED</li>
+            </ul>
+            <div style="margin-top:20px; color:var(--cyber-green); font-size:0.8rem;">
+                SUPERVISED BY: DR. KARIM BADR
+            </div>
+        </div>
+    </div>
 
     <main class="page">
         <section class="intro">
@@ -228,16 +263,16 @@
             <div class="flow-layout">
                 <div class="flow-steps" id="flowSteps">
                     <div class="flow-step active" data-step="1" data-detail="Establishing PQ-capability negotiation between UE and gNB to prevent downgrade attacks.">
-                        <span class="idx">01</span> CAPABILITY_NEGOTIATION
+                        <span style="color:var(--cyber-green); font-weight:bold">01</span> CAPABILITY_NEGOTIATION
                     </div>
                     <div class="flow-step" data-step="2" data-detail="Running ML-KEM encapsulation to generate post-quantum secure session keys for the target cell.">
-                        <span class="idx">02</span> PQ_KEY_ENCAPSULATION
+                        <span style="color:var(--cyber-green); font-weight:bold">02</span> PQ_KEY_ENCAPSULATION
                     </div>
                     <div class="flow-step" data-step="3" data-detail="Using ML-DSA to sign handover commands, ensuring authenticity and preventing malicious cell injection.">
-                        <span class="idx">03</span> IDENTITY_VERIFICATION
+                        <span style="color:var(--cyber-green); font-weight:bold">03</span> IDENTITY_VERIFICATION
                     </div>
                     <div class="flow-step" data-step="4" data-detail="Finalizing the secure tunnel with quantum-resistant keys, enabling safe data transmission.">
-                        <span class="idx">04</span> ENCRYPTED_DATA_FLOW
+                        <span style="color:var(--cyber-green); font-weight:bold">04</span> ENCRYPTED_DATA_FLOW
                     </div>
                 </div>
                 <aside class="flow-detail" id="flowDetail">
@@ -275,9 +310,7 @@
                 tab.classList.add('active');
                 const targetId = 'section-' + tab.dataset.target;
                 const section = document.getElementById(targetId);
-                if (section) {
-                    window.scrollTo({ top: section.offsetTop - 100, behavior: 'smooth' });
-                }
+                if (section) { window.scrollTo({ top: section.offsetTop - 100, behavior: 'smooth' }); }
             });
         });
 
@@ -290,6 +323,13 @@
                 detailText.textContent = step.dataset.detail;
             });
         });
+
+        const modal = document.getElementById("teamModal");
+        const btn = document.getElementById("showTeam");
+        const span = document.getElementById("closeModal");
+        btn.onclick = function() { modal.style.display = "block"; }
+        span.onclick = function() { modal.style.display = "none"; }
+        window.onclick = function(event) { if (event.target == modal) { modal.style.display = "none"; } }
     </script>
 </body>
 </html>
